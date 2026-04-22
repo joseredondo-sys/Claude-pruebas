@@ -1,12 +1,19 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#6C5CE7">
-<title>Scan · Infraestructura</title>
 <style>
-  :root{
+  /* ===================================================================
+     WIDGET SCAN · INFRAESTRUCTURA — listo para Elementor HTML widget
+     Todo el CSS está scopeado al contenedor .nxcsb01-viz.
+     No modifica <body>, <html>, ni aplica resets globales.
+     ================================================================= */
+
+  /* Reset acotado: solo afecta a los descendientes del widget */
+  .nxcsb01-viz,
+  .nxcsb01-viz *,
+  .nxcsb01-viz *::before,
+  .nxcsb01-viz *::after{
+    box-sizing:border-box;
+  }
+
+  .nxcsb01-viz{
     --nx-bg-a:#FAFAFC;
     --nx-bg-b:#F3F1FA;
     --nx-primary:#6C5CE7;
@@ -14,28 +21,10 @@
     --nx-primary-soft:rgba(108,92,231,.14);
     --nx-primary-line:rgba(108,92,231,.09);
     --nx-accent:#E85BE5;
-  }
 
-  *,*::before,*::after{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    min-height:100svh;
-    display:grid;place-items:center;
-    padding:clamp(12px,4vmin,32px);
-    background:
-      radial-gradient(ellipse at 20% 0%,rgba(108,92,231,.12),transparent 60%),
-      radial-gradient(ellipse at 80% 100%,rgba(232,91,229,.08),transparent 55%),
-      #ECEAF5;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
-    -webkit-font-smoothing:antialiased;
-    overflow-x:hidden;
-  }
-
-  /* ===== Container ===== */
-  .nxcsb01-viz{
     position:relative;
     width:100%;
-    max-width:min(480px,92vmin);
+    max-width:480px;
     aspect-ratio:1/1;
     margin:0 auto;
     border-radius:clamp(14px,4cqi,22px);
@@ -46,35 +35,36 @@
       0 clamp(10px,3cqi,24px) clamp(30px,9cqi,60px) -12px rgba(108,92,231,.35),
       0 2px 0 rgba(255,255,255,.6) inset;
     container-type:inline-size;
-    container-name:viz;
+    container-name:nxcsb01viz;
     isolation:isolate;
     cursor:default;
     will-change:transform;
     animation:nxcsb01enter .9s cubic-bezier(.2,.9,.2,1) both;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,sans-serif;
+    -webkit-font-smoothing:antialiased;
   }
   @keyframes nxcsb01enter{
     from{opacity:0;transform:translateY(12px) scale(.97)}
     to{opacity:1;transform:none}
   }
 
-  /* ===== Background grid (scales with container) ===== */
-  .nxcsb01-grid{
+  .nxcsb01-viz .nxcsb01-grid{
     position:absolute;inset:0;
     background-image:
-      linear-gradient(var(--nx-primary-line) 1px,transparent 1px),
-      linear-gradient(90deg,var(--nx-primary-line) 1px,transparent 1px);
+      linear-gradient(rgba(108,92,231,.09) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(108,92,231,.09) 1px,transparent 1px);
     background-size:11% 11%;
     opacity:.65;
     animation:nxcsb01drift 28s linear infinite;
-    mask-image:radial-gradient(ellipse at center,#000 55%,transparent 100%);
+    -webkit-mask-image:radial-gradient(ellipse at center,#000 55%,transparent 100%);
+            mask-image:radial-gradient(ellipse at center,#000 55%,transparent 100%);
   }
   @keyframes nxcsb01drift{
     from{background-position:0 0}
     to{background-position:11% 11%}
   }
 
-  /* ===== Breathing aura ===== */
-  .nxcsb01-glow{
+  .nxcsb01-viz .nxcsb01-glow{
     position:absolute;inset:0;
     background:radial-gradient(circle at 50% 50%,rgba(108,92,231,.18),transparent 58%);
     animation:nxcsb01breath 5s ease-in-out infinite;
@@ -85,39 +75,36 @@
     50%{opacity:1;transform:scale(1.04)}
   }
 
-  /* ===== Scan beams (radial sweeping lines) ===== */
-  .nxcsb01-beams{
+  .nxcsb01-viz .nxcsb01-beams{
     position:absolute;inset:0;
     display:grid;place-items:center;
     pointer-events:none;z-index:1;
     opacity:.55;
   }
-  .nxcsb01-beam{
+  .nxcsb01-viz .nxcsb01-beam{
     position:absolute;left:50%;top:50%;
     width:60%;height:1px;
     transform-origin:0 50%;
     background:linear-gradient(90deg,transparent 0%,rgba(108,92,231,.35) 40%,rgba(232,91,229,.45) 80%,transparent 100%);
     animation:nxcsb01beam 9s linear infinite;
   }
-  .nxcsb01-beam:nth-child(2){animation-duration:11s;animation-delay:-3s;opacity:.5}
-  .nxcsb01-beam:nth-child(3){animation-duration:14s;animation-delay:-7s;opacity:.35}
+  .nxcsb01-viz .nxcsb01-beam:nth-child(2){animation-duration:11s;animation-delay:-3s;opacity:.5}
+  .nxcsb01-viz .nxcsb01-beam:nth-child(3){animation-duration:14s;animation-delay:-7s;opacity:.35}
   @keyframes nxcsb01beam{
     from{transform:rotate(0deg)}
     to{transform:rotate(360deg)}
   }
 
-  /* ===== Tiles grid ===== */
-  .nxcsb01-stage{position:absolute;inset:0;display:grid;place-items:center}
-  .nxcsb01-tiles{
+  .nxcsb01-viz .nxcsb01-stage{position:absolute;inset:0;display:grid;place-items:center}
+  .nxcsb01-viz .nxcsb01-tiles{
     position:relative;
-    width:min(70%,70cqi);
+    width:70%;
     aspect-ratio:1/1;
     transform:rotate(-18deg) skewY(8deg);
     transform-origin:center;
     filter:drop-shadow(0 1.2cqi 1.8cqi rgba(108,92,231,.18));
   }
-
-  .nxcsb01-tile{
+  .nxcsb01-viz .nxcsb01-tile{
     position:absolute;
     width:28%;
     aspect-ratio:1/1;
@@ -128,7 +115,7 @@
     transition:transform .4s cubic-bezier(.2,.9,.2,1),box-shadow .4s ease;
     animation:nxcsb01rise .9s cubic-bezier(.2,.9,.2,1) both;
   }
-  .nxcsb01-tile::after{
+  .nxcsb01-viz .nxcsb01-tile::after{
     content:'';
     position:absolute;inset:26%;
     border-radius:18%;
@@ -139,22 +126,22 @@
     to{opacity:1;transform:none}
   }
 
-  .nxcsb01-t1{top:0;left:0;animation-delay:.05s}
-  .nxcsb01-t2{top:0;left:36%;animation-delay:.12s}
-  .nxcsb01-t3{top:0;left:72%;animation-delay:.19s}
-  .nxcsb01-t4{top:36%;left:0;animation-delay:.26s}
-  .nxcsb01-t5{
+  .nxcsb01-viz .nxcsb01-t1{top:0;left:0;animation-delay:.05s}
+  .nxcsb01-viz .nxcsb01-t2{top:0;left:36%;animation-delay:.12s}
+  .nxcsb01-viz .nxcsb01-t3{top:0;left:72%;animation-delay:.19s}
+  .nxcsb01-viz .nxcsb01-t4{top:36%;left:0;animation-delay:.26s}
+  .nxcsb01-viz .nxcsb01-t5{
     top:36%;left:36%;
     background:linear-gradient(135deg,#7C6FF0,var(--nx-primary-dark));
     border-color:rgba(124,111,240,.65);
     animation:nxcsb01rise .9s cubic-bezier(.2,.9,.2,1) both .33s,
               nxcsb01heart 3.2s ease-in-out infinite 1.2s;
   }
-  .nxcsb01-t5::after{background:rgba(255,255,255,.38)}
-  .nxcsb01-t6{top:36%;left:72%;animation-delay:.4s}
-  .nxcsb01-t7{top:72%;left:0;animation-delay:.47s}
-  .nxcsb01-t8{top:72%;left:36%;animation-delay:.54s}
-  .nxcsb01-t9{top:72%;left:72%;animation-delay:.61s}
+  .nxcsb01-viz .nxcsb01-t5::after{background:rgba(255,255,255,.38)}
+  .nxcsb01-viz .nxcsb01-t6{top:36%;left:72%;animation-delay:.4s}
+  .nxcsb01-viz .nxcsb01-t7{top:72%;left:0;animation-delay:.47s}
+  .nxcsb01-viz .nxcsb01-t8{top:72%;left:36%;animation-delay:.54s}
+  .nxcsb01-viz .nxcsb01-t9{top:72%;left:72%;animation-delay:.61s}
 
   @keyframes nxcsb01heart{
     0%,100%{
@@ -169,8 +156,7 @@
     }
   }
 
-  /* ===== Lens (scanner) ===== */
-  .nxcsb01-lens{
+  .nxcsb01-viz .nxcsb01-lens{
     position:absolute;
     top:50%;left:50%;
     width:46%;
@@ -178,8 +164,8 @@
     border-radius:50%;
     border:clamp(1.5px,.55cqi,3px) solid var(--nx-primary);
     background:rgba(255,255,255,.08);
-    backdrop-filter:blur(2px) saturate(1.2);
     -webkit-backdrop-filter:blur(2px) saturate(1.2);
+            backdrop-filter:blur(2px) saturate(1.2);
     box-shadow:
       0 0 0 clamp(3px,1.2cqi,8px) rgba(108,92,231,.1),
       0 clamp(8px,3.8cqi,22px) clamp(20px,10cqi,52px) rgba(108,92,231,.3),
@@ -189,8 +175,7 @@
     pointer-events:none;
     will-change:transform;
   }
-  /* Handle */
-  .nxcsb01-lens::after{
+  .nxcsb01-viz .nxcsb01-lens::after{
     content:'';
     position:absolute;
     width:26%;height:6%;
@@ -200,8 +185,7 @@
     transform:rotate(45deg);
     box-shadow:0 .8cqi 2.4cqi rgba(108,92,231,.45);
   }
-  /* Inner dashed ring */
-  .nxcsb01-lens::before{
+  .nxcsb01-viz .nxcsb01-lens::before{
     content:'';
     position:absolute;inset:16%;
     border-radius:50%;
@@ -209,19 +193,18 @@
     animation:nxcsb01spin 8s linear infinite;
   }
 
-  /* Crosshair inside lens */
-  .nxcsb01-reticle{
+  .nxcsb01-viz .nxcsb01-reticle{
     position:absolute;inset:0;
     border-radius:50%;
     pointer-events:none;
     overflow:hidden;
   }
-  .nxcsb01-reticle::before,
-  .nxcsb01-reticle::after{
+  .nxcsb01-viz .nxcsb01-reticle::before,
+  .nxcsb01-viz .nxcsb01-reticle::after{
     content:'';position:absolute;background:rgba(108,92,231,.45);
   }
-  .nxcsb01-reticle::before{top:50%;left:30%;right:30%;height:1px;transform:translateY(-50%)}
-  .nxcsb01-reticle::after{left:50%;top:30%;bottom:30%;width:1px;transform:translateX(-50%)}
+  .nxcsb01-viz .nxcsb01-reticle::before{top:50%;left:30%;right:30%;height:1px;transform:translateY(-50%)}
+  .nxcsb01-viz .nxcsb01-reticle::after{left:50%;top:30%;bottom:30%;width:1px;transform:translateX(-50%)}
 
   @keyframes nxcsb01orbit{
     0%  {transform:translate(-120%,-120%)}
@@ -236,8 +219,7 @@
     to{transform:rotate(360deg)}
   }
 
-  /* ===== Blip dots ===== */
-  .nxcsb01-dot{
+  .nxcsb01-viz .nxcsb01-dot{
     position:absolute;
     width:clamp(5px,1.7cqi,9px);
     aspect-ratio:1/1;
@@ -249,35 +231,33 @@
     animation:nxcsb01blip 2.6s ease-in-out infinite;
     z-index:2;
   }
-  .nxcsb01-d1{top:22%;left:32%;animation-delay:0s}
-  .nxcsb01-d2{top:35%;left:68%;animation-delay:.6s}
-  .nxcsb01-d3{top:66%;left:30%;animation-delay:1.2s}
-  .nxcsb01-d4{top:70%;left:70%;animation-delay:1.8s}
+  .nxcsb01-viz .nxcsb01-d1{top:22%;left:32%;animation-delay:0s}
+  .nxcsb01-viz .nxcsb01-d2{top:35%;left:68%;animation-delay:.6s}
+  .nxcsb01-viz .nxcsb01-d3{top:66%;left:30%;animation-delay:1.2s}
+  .nxcsb01-viz .nxcsb01-d4{top:70%;left:70%;animation-delay:1.8s}
   @keyframes nxcsb01blip{
     0%,100%{opacity:0;transform:scale(.35)}
     40%,60%{opacity:1;transform:scale(1)}
   }
 
-  /* ===== Corner markers (telemetry feel) ===== */
-  .nxcsb01-corners{position:absolute;inset:clamp(10px,3cqi,18px);pointer-events:none;z-index:4}
-  .nxcsb01-corners::before,
-  .nxcsb01-corners::after,
-  .nxcsb01-corners>i{
+  .nxcsb01-viz .nxcsb01-corners{position:absolute;inset:clamp(10px,3cqi,18px);pointer-events:none;z-index:4}
+  .nxcsb01-viz .nxcsb01-corners::before,
+  .nxcsb01-viz .nxcsb01-corners::after,
+  .nxcsb01-viz .nxcsb01-corners > i{
     content:'';position:absolute;
     width:clamp(10px,3cqi,18px);
     height:clamp(10px,3cqi,18px);
     border:1.5px solid rgba(108,92,231,.4);
     border-radius:3px;
   }
-  .nxcsb01-corners::before{top:0;left:0;border-right:0;border-bottom:0}
-  .nxcsb01-corners::after{top:0;right:0;border-left:0;border-bottom:0}
-  .nxcsb01-corners .bl{bottom:0;left:0;border-right:0;border-top:0;position:absolute;display:block}
-  .nxcsb01-corners .br{bottom:0;right:0;border-left:0;border-top:0;position:absolute;display:block}
+  .nxcsb01-viz .nxcsb01-corners::before{top:0;left:0;border-right:0;border-bottom:0}
+  .nxcsb01-viz .nxcsb01-corners::after{top:0;right:0;border-left:0;border-bottom:0}
+  .nxcsb01-viz .nxcsb01-corners .bl{bottom:0;left:0;border-right:0;border-top:0;display:block}
+  .nxcsb01-viz .nxcsb01-corners .br{bottom:0;right:0;border-left:0;border-top:0;display:block}
 
-  /* ===== HUD labels ===== */
-  .nxcsb01-hud,
-  .nxcsb01-hud-r,
-  .nxcsb01-hud-lb{
+  .nxcsb01-viz .nxcsb01-hud,
+  .nxcsb01-viz .nxcsb01-hud-r,
+  .nxcsb01-viz .nxcsb01-hud-lb{
     position:absolute;
     z-index:5;
     font-family:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
@@ -286,15 +266,15 @@
     text-transform:uppercase;
     line-height:1;
     white-space:nowrap;
+    margin:0;
   }
-
-  .nxcsb01-hud{
+  .nxcsb01-viz .nxcsb01-hud{
     left:clamp(14px,4.5cqi,24px);
     top:clamp(14px,4.5cqi,24px);
     color:rgba(108,92,231,.8);
     display:flex;gap:clamp(6px,1.8cqi,10px);align-items:center;
   }
-  .nxcsb01-hud span{
+  .nxcsb01-viz .nxcsb01-hud span{
     width:clamp(5px,1.4cqi,7px);
     aspect-ratio:1/1;
     border-radius:50%;
@@ -307,99 +287,93 @@
     0%,100%{opacity:.4;transform:scale(.9)}
     50%{opacity:1;transform:scale(1.1)}
   }
-
-  .nxcsb01-hud-r{
+  .nxcsb01-viz .nxcsb01-hud-r{
     right:clamp(14px,4.5cqi,24px);
     bottom:clamp(14px,4.5cqi,24px);
     color:rgba(108,92,231,.6);
   }
-
-  .nxcsb01-hud-lb{
+  .nxcsb01-viz .nxcsb01-hud-lb{
     left:clamp(14px,4.5cqi,24px);
     bottom:clamp(14px,4.5cqi,24px);
     color:rgba(108,92,231,.55);
     display:flex;flex-direction:column;gap:clamp(3px,.8cqi,5px);
   }
-  .nxcsb01-hud-lb b{
+  .nxcsb01-viz .nxcsb01-hud-lb b{
     font-weight:600;
     color:var(--nx-primary);
     font-variant-numeric:tabular-nums;
     letter-spacing:.2em;
   }
 
-  /* ===== Container-based tweaks for very narrow viz ===== */
-  @container viz (max-width:340px){
-    .nxcsb01-tiles{width:78%}
-    .nxcsb01-hud-lb{display:none}
-    .nxcsb01-grid{background-size:14% 14%}
+  @container nxcsb01viz (max-width:340px){
+    .nxcsb01-viz .nxcsb01-tiles{width:78%}
+    .nxcsb01-viz .nxcsb01-hud-lb{display:none}
+    .nxcsb01-viz .nxcsb01-grid{background-size:14% 14%}
   }
-  @container viz (max-width:260px){
-    .nxcsb01-hud,.nxcsb01-hud-r{letter-spacing:.08em}
-    .nxcsb01-corners{inset:clamp(6px,2.5cqi,12px)}
+  @container nxcsb01viz (max-width:260px){
+    .nxcsb01-viz .nxcsb01-hud,
+    .nxcsb01-viz .nxcsb01-hud-r{letter-spacing:.08em}
+    .nxcsb01-viz .nxcsb01-corners{inset:clamp(6px,2.5cqi,12px)}
   }
 
-  /* ===== Reduced motion ===== */
   @media (prefers-reduced-motion: reduce){
     .nxcsb01-viz,
-    .nxcsb01-grid,
-    .nxcsb01-glow,
-    .nxcsb01-beam,
-    .nxcsb01-lens,
-    .nxcsb01-lens::before,
-    .nxcsb01-dot,
-    .nxcsb01-hud span,
-    .nxcsb01-tile,
-    .nxcsb01-t5{
+    .nxcsb01-viz .nxcsb01-grid,
+    .nxcsb01-viz .nxcsb01-glow,
+    .nxcsb01-viz .nxcsb01-beam,
+    .nxcsb01-viz .nxcsb01-lens,
+    .nxcsb01-viz .nxcsb01-lens::before,
+    .nxcsb01-viz .nxcsb01-dot,
+    .nxcsb01-viz .nxcsb01-hud span,
+    .nxcsb01-viz .nxcsb01-tile,
+    .nxcsb01-viz .nxcsb01-t5{
       animation:none !important;
       transition:none !important;
     }
-    .nxcsb01-lens{transform:translate(-50%,-50%)}
+    .nxcsb01-viz .nxcsb01-lens{transform:translate(-50%,-50%)}
   }
 </style>
-</head>
-<body>
-  <div class="nxcsb01-viz" role="img" aria-label="Escaneo de infraestructura: 9 sistemas, 1 ecosistema">
-    <div class="nxcsb01-grid"></div>
-    <div class="nxcsb01-glow"></div>
 
-    <div class="nxcsb01-beams" aria-hidden="true">
-      <div class="nxcsb01-beam"></div>
-      <div class="nxcsb01-beam"></div>
-      <div class="nxcsb01-beam"></div>
-    </div>
+<div class="nxcsb01-viz" role="img" aria-label="Escaneo de infraestructura: 9 sistemas, 1 ecosistema">
+  <div class="nxcsb01-grid"></div>
+  <div class="nxcsb01-glow"></div>
 
-    <div class="nxcsb01-corners" aria-hidden="true"><i class="bl"></i><i class="br"></i></div>
-
-    <div class="nxcsb01-hud"><span></span>Scan · Infraestructura</div>
-
-    <div class="nxcsb01-stage">
-      <div class="nxcsb01-tiles">
-        <div class="nxcsb01-tile nxcsb01-t1"></div>
-        <div class="nxcsb01-tile nxcsb01-t2"></div>
-        <div class="nxcsb01-tile nxcsb01-t3"></div>
-        <div class="nxcsb01-tile nxcsb01-t4"></div>
-        <div class="nxcsb01-tile nxcsb01-t5"></div>
-        <div class="nxcsb01-tile nxcsb01-t6"></div>
-        <div class="nxcsb01-tile nxcsb01-t7"></div>
-        <div class="nxcsb01-tile nxcsb01-t8"></div>
-        <div class="nxcsb01-tile nxcsb01-t9"></div>
-      </div>
-    </div>
-
-    <div class="nxcsb01-dot nxcsb01-d1"></div>
-    <div class="nxcsb01-dot nxcsb01-d2"></div>
-    <div class="nxcsb01-dot nxcsb01-d3"></div>
-    <div class="nxcsb01-dot nxcsb01-d4"></div>
-
-    <div class="nxcsb01-lens">
-      <div class="nxcsb01-reticle"></div>
-    </div>
-
-    <div class="nxcsb01-hud-lb">
-      <span>LAT 0.08ms</span>
-      <b>UPTIME 99.99%</b>
-    </div>
-    <div class="nxcsb01-hud-r">9 Sistemas · 1 Ecosistema</div>
+  <div class="nxcsb01-beams" aria-hidden="true">
+    <div class="nxcsb01-beam"></div>
+    <div class="nxcsb01-beam"></div>
+    <div class="nxcsb01-beam"></div>
   </div>
-</body>
-</html>
+
+  <div class="nxcsb01-corners" aria-hidden="true"><i class="bl"></i><i class="br"></i></div>
+
+  <div class="nxcsb01-hud"><span></span>Scan · Infraestructura</div>
+
+  <div class="nxcsb01-stage">
+    <div class="nxcsb01-tiles">
+      <div class="nxcsb01-tile nxcsb01-t1"></div>
+      <div class="nxcsb01-tile nxcsb01-t2"></div>
+      <div class="nxcsb01-tile nxcsb01-t3"></div>
+      <div class="nxcsb01-tile nxcsb01-t4"></div>
+      <div class="nxcsb01-tile nxcsb01-t5"></div>
+      <div class="nxcsb01-tile nxcsb01-t6"></div>
+      <div class="nxcsb01-tile nxcsb01-t7"></div>
+      <div class="nxcsb01-tile nxcsb01-t8"></div>
+      <div class="nxcsb01-tile nxcsb01-t9"></div>
+    </div>
+  </div>
+
+  <div class="nxcsb01-dot nxcsb01-d1"></div>
+  <div class="nxcsb01-dot nxcsb01-d2"></div>
+  <div class="nxcsb01-dot nxcsb01-d3"></div>
+  <div class="nxcsb01-dot nxcsb01-d4"></div>
+
+  <div class="nxcsb01-lens">
+    <div class="nxcsb01-reticle"></div>
+  </div>
+
+  <div class="nxcsb01-hud-lb">
+    <span>LAT 0.08ms</span>
+    <b>UPTIME 99.99%</b>
+  </div>
+  <div class="nxcsb01-hud-r">9 Sistemas · 1 Ecosistema</div>
+</div>
